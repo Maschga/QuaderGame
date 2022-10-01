@@ -6,9 +6,7 @@
 Game game = Game("2D_Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600);
 Player player = Player(50.0, 50.0, 4.0);
 
-
-int WinMain(int argc, char* args[]) { // g++ compiler needs this methodname to call
-
+int main(int argc, char* args[]) {
     const int FPS = 120;
     const float frameDelay = 1000 / FPS;
 
@@ -34,6 +32,6 @@ int WinMain(int argc, char* args[]) { // g++ compiler needs this methodname to c
     return 0;
 }
 
-int main(int argc, char* args[]) {
-    return WinMain(argc, args);
+int WinMain(int argc, char* args[]) { // this methods is called on windows instead of "main()"
+    return main(argc, args);
 }

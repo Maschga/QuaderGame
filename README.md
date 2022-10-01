@@ -8,7 +8,7 @@ Compile the code by using the `Makefile` `make` and run the created `MAIN.exe`-f
 #
 ## Big thank
 
-to the contributor of the [Simple DirectMedia Layer [SDL]](https://www.libsdl.org/)-library, without them this project would exist.
+to the contributor of the [Simple DirectMedia Layer [SDL]](https://www.libsdl.org/)-library, without them this project would not exist.
 
 #
 
