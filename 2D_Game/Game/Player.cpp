@@ -120,7 +120,7 @@ void Player::move_right() {
     window_size w_size = game.get_window_size();
 
     if (player_rect.x + move_distance <= w_size.width - player_rect.w) {
-        // checking if the player is approximately in the middle of the window and the structures must be move instead of the player
+        // checking if the player is approximately in the middle of the window and the structures must be moved instead of the player
         if ((double)player_rect.x + player_rect.w > w_size.width * 0.5) {
             ground.move_x(move_distance * -1); // -1 because the ground must move to the left
         } else {
