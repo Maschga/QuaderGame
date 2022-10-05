@@ -5,7 +5,8 @@
 
 class Player {
 public:
-    void reset(float x, float y) { player_rect.x = x; player_rect.y = y; is_falling = true; fall_started = 0; }
+    // Resets the player to a specifed position. Used when the player fell down. NOTE: Will be removed in future.
+    void reset(float x, float y) { player_rect.x = x; player_rect.y = y; is_falling = true; velosity_fall = 0;}
 
     /* Initializes the class.
     *
@@ -120,23 +121,14 @@ private:
     // Whether the player is currently jumping.
     bool is_jumping = false;
 
-    /* When the jump started; Specified by microseconds.
-    * Defaults to 0 when the player is not jumping.
-    */
-    Uint32 jump_started = 0;
-
-    /* Where the jump started; Specified by the y-position of the player.
-    * Defaults to 0 when the player is not jumping.
-    */
-    float jump_start = 0;
-
     // Whether the player is currently falling.
     bool is_falling = true;
 
-    /* When the fall started; Specified by microseconds.
-    * Defaults to 0 when the player is not falling.
-    */
-    Uint32 fall_started = 0;
+    // Handles the jump acceleration; when jumping variable is decreases to 0, then falling begins.
+    int velosity_jump = 25;
+
+    // Handles the fall acceleration; when falling variable is increased to 60 after that the player falls constant.
+    int velosity_fall = 0;
 
     /* How far the player was moved in the last fall-calculation.
     * Defaults to 0.0 when the player is not falling.

@@ -140,58 +140,33 @@ on_ground_check Player::on_ground() {
 }
 
 void Player::calculate_jump() {
-    // using the formula x-0.5*g*t**2 to calculate jump-velocity
+    player_rect.y -= velosity_jump;
+    velosity_jump -= 1;
 
-    if (jump_started == 0) { // first method call after pressing falling began
-        jump_started = SDL_GetTicks();
-        jump_start = player_rect.y + player_rect.h;
+    if (velosity_jump < 0) {
+        is_jumping = false;
+        velosity_jump = 25;
 
-        player_rect.y -= 5;
-    } else {
-        Uint32 passed_seconds = SDL_GetTicks() - jump_started;
-        float distance_traveled = player_rect.y + player_rect.h - jump_start;
-
-        float move_y = (distance_traveled - 0.5  * 9.81 * passed_seconds * passed_seconds) / 10000;
-        
-        // without this the player would at first jump very slowly and than get faster and faster over time.
-        // by this calculation the behavior of the acceleration turns around.
-        move_y = 20.0 + move_y;
-
-        if (move_y < 0.0) {
-            // resetting variables
-            is_jumping = false;
-            jump_start = 0;
-            jump_started = 0;
-
-            is_falling = true;
-        } else {
-            player_rect.y -= move_y;
-        }
+        is_falling = true;
     }
 }
 
 void Player::calculate_fall() {
-    // using the formula 0.5*g*t**2 to calculate fall-velocity
+    on_ground_check ogc = on_ground();
 
-    if (fall_started == 0) { // first method call after falling began
-        fall_started = SDL_GetTicks();
+    if (ogc.on_ground) {
+        // resetting variables
+        is_falling = false;
+        velosity_fall = 0;
+        fall_move_distance = 0.0;
 
-        fall_move_distance = 2;
-        player_rect.y += fall_move_distance;
+        player_rect.y = ogc.block_y - player_rect.h;
     } else {
-        on_ground_check ogc = on_ground();
+        fall_move_distance = velosity_fall / 4;
+        player_rect.y += fall_move_distance;
 
-        if (ogc.on_ground) {
-            // resetting variables
-            is_falling = false;
-            fall_started = 0;
-            fall_move_distance = 0.0;
-
-            player_rect.y = ogc.block_y - player_rect.h;
-        } else {
-            Uint32 passed_seconds = SDL_GetTicks() - fall_started;
-            fall_move_distance = (0.5 * 9.81 * passed_seconds * passed_seconds) / 100000;
-            player_rect.y += fall_move_distance;
+        if (velosity_fall < 60) { // limiting acceleration
+            velosity_fall += 1;
         }
     }
 }
