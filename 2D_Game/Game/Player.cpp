@@ -165,9 +165,7 @@ void Player::calculate_fall() {
         fall_move_distance = velosity_fall / 4;
         player_rect.y += fall_move_distance;
 
-        if (velosity_fall < 60) { // limiting acceleration
-            velosity_fall += 1;
-        }
+        velosity_fall += 1;
     }
 }
 
